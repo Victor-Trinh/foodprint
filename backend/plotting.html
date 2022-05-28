@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+
+<body>
+
+    <div id="myPlot" style="width:100%;max-width:700px"></div>
+    <div id="myPlot2" style="width:100%;max-width:700px"></div>
+
+    <script>
+        const d1 = new Date(2022, 4, 25);
+        const d2 = new Date(2022, 4, 26);
+        const d3 = new Date(2022, 4, 27);
+        var xArray = [d1, d2, d3];
+        var yArray = [60.1, 12.2, 65.7];
+
+        // Define Data
+        var data = [
+            {
+                x: xArray,
+                y: yArray,
+                type: 'scatter'
+            }
+        ];
+
+        // Define Layout
+        var layout = {
+            xaxis: { title: "Total Daily Carbon Emission" },
+            yaxis: { range: [0, 70], title: "Date" },
+            title: "Carbon Emission vs. Date"
+        };
+
+        var data2 = [
+            {
+                x: ['chicken', 'vegetables', 'beef'],
+                y: [18.3, 0.5, 119.2],
+                type: 'bar'
+            }
+        ];
+
+        var layout2 = {
+            xaxis: { title: "Total Carbon Emission" },
+            yaxis: { title: "Food" },
+            title: "Carbon Emission vs. Food"
+        };
+
+        Plotly.newPlot('myPlot', data, layout);
+        Plotly.newPlot('myPlot2', data2, layout2);
+    </script>
+
+</body>
+
+</html>
