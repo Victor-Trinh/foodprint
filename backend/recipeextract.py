@@ -6,6 +6,7 @@ import datetime
 import os
 import numpy as np
 from tqdm import tqdm
+import random
 
 # https://github.com/cohere-ai/notebooks/blob/main/notebooks/Entity_Extrcation_with_Generative_Language_Models.ipynb
 class cohereExtractor():
@@ -26,7 +27,7 @@ class cohereExtractor():
 
     def extract(self, example):
       extraction = co.generate(
-          model='large',
+          model='small',
           prompt=self.make_prompt(example),
           max_tokens=10,
           temperature=0.1,
@@ -36,10 +37,15 @@ class cohereExtractor():
 # get random (ingredient, instructions)
 def get_random_recipes(data, n):
   recipes = []
-  idx = np.random.randint(0, len(data), size = n)
+  idx = list(range(n))
+  #idx = np.random.randint(0, len(data), size = n)
+  random.shuffle(idx)
   for id in idx:
-    recipes.append(("; ".join([food['text'] for food in data[id]['annotation']]), # extracted
-                    data[id]['infon'][1])) # instructions
+    try:
+      recipes.append(("; ".join([food['text'] for food in data[id]['annotation']]), # extracted
+                      data[id]['infon'][1])) # instructions
+    except:
+      continue
   return recipes
 
 # get random (instructions)
@@ -63,12 +69,13 @@ if __name__ == "__main__":
 
   # get recipes 
   recipe_examples = get_random_recipes(data, 10)
-  instructions = get_random_instructions(data, 5)
+  instructions = get_random_instructions(data, 1)
   cohereFoodExtractor = cohereExtractor([e[1] for e in recipe_examples],
                                         [e[0] for e in recipe_examples], 
                                         [],
                                         "",
                                         "extract food from recipe: ")
+  print(cohereFoodExtractor.make_prompt('<input text here>'))
 
   # extract food from recipes
   results = []
@@ -79,5 +86,5 @@ if __name__ == "__main__":
     except Exception as e:
       print('ERROR: ', e)
 
-  food_extractions = pd.DataFrame(data={'text': instructions, 'extracted_text': results})
-  print(food_extractions)
+  #food_extractions = pd.DataFrame(data={'text': instructions, 'extracted_text': results})
+  print("".join(instructions) + '\n' + "".join(results))
