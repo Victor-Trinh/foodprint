@@ -1,4 +1,5 @@
 google-api-python-client
+google-cloud-vision
 certifi==2022.5.18.1
 charset-normalizer==2.0.12
 click==8.1.3
