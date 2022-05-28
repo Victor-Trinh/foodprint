@@ -69,13 +69,13 @@ if __name__ == "__main__":
 
   # get recipes 
   recipe_examples = get_random_recipes(data, 4)#[get_random_recipes(data, 1)[0] * 10]
-  instructions = [recipe_examples[0][1]]
+  instructions = get_random_instructions(data, 1)#[recipe_examples[0][1]]
   cohereFoodExtractor = cohereExtractor([e[1] for e in recipe_examples],
                                         [e[0] for e in recipe_examples], 
                                         [],
                                         "",
                                         "extract food from recipe: ")
-  print(cohereFoodExtractor.make_prompt('<input text here>'))
+  #print(cohereFoodExtractor.make_prompt('<input text here>'))
 
   # extract food from recipes
   results = []
