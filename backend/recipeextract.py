@@ -27,7 +27,7 @@ class cohereExtractor():
 
     def extract(self, example):
       extraction = co.generate(
-          model='small',
+          model='df26095e-6137-4e4c-aea9-be0849745670-ft',
           prompt=self.make_prompt(example),
           max_tokens=10,
           temperature=0.1,
@@ -68,8 +68,8 @@ if __name__ == "__main__":
   data = list(data)
 
   # get recipes 
-  recipe_examples = get_random_recipes(data, 10)
-  instructions = get_random_instructions(data, 1)
+  recipe_examples = get_random_recipes(data, 4)#[get_random_recipes(data, 1)[0] * 10]
+  instructions = [recipe_examples[0][1]]
   cohereFoodExtractor = cohereExtractor([e[1] for e in recipe_examples],
                                         [e[0] for e in recipe_examples], 
                                         [],
@@ -87,4 +87,9 @@ if __name__ == "__main__":
       print('ERROR: ', e)
 
   #food_extractions = pd.DataFrame(data={'text': instructions, 'extracted_text': results})
-  print("".join(instructions) + '\n' + "".join(results))
+  #process strings
+  results = "".join(results).split(';')
+  fin = []
+  for food in results:
+    fin.append(food.strip())
+  print("".join(instructions) + '\n' + str(fin))
