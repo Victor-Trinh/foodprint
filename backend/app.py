@@ -1,6 +1,10 @@
 import ast
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin # source https://stackoverflow.com/questions/25594893/how-to-enable-cors-in-flask
+from dotenv import load_dotenv
+
+load_dotenv()
+
 app = Flask(__name__)
 cors = CORS(app)
 
