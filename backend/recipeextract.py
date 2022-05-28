@@ -7,8 +7,6 @@ import os
 import numpy as np
 from tqdm import tqdm
 
-co = cohere.Client(os.environ['COHERE_KEY'])
-
 # https://github.com/cohere-ai/notebooks/blob/main/notebooks/Entity_Extrcation_with_Generative_Language_Models.ipynb
 class cohereExtractor():
     def __init__(self, examples, example_labels, labels, task_desciption, example_prompt):
@@ -53,14 +51,18 @@ def get_random_instructions(data, n):
   return recipes
 
 if __name__ == "__main__":
+  from dotenv import load_dotenv
+  load_dotenv()
+  co = cohere.Client(os.environ['COHERE_KEY'])
+
   # load recipe data https://academic.oup.com/database/article/doi/10.1093/database/baz121/5611291
   with open('data/xmltojson.json') as fp:
       data = json.load(fp)
   data = data['collection']['document']
   data = list(data)
-  
+
   # get recipes 
-  recipe_examples = get_random_recipes(data, 200)
+  recipe_examples = get_random_recipes(data, 10)
   instructions = get_random_instructions(data, 5)
   cohereFoodExtractor = cohereExtractor([e[1] for e in recipe_examples],
                                         [e[0] for e in recipe_examples], 
@@ -78,3 +80,4 @@ if __name__ == "__main__":
       print('ERROR: ', e)
 
   food_extractions = pd.DataFrame(data={'text': instructions, 'extracted_text': results})
+  print(food_extractions)
