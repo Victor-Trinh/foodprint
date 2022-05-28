@@ -24,8 +24,11 @@ class GVisionManager:
         return texts
 
 if __name__ == "__main__":
-    import os 
-    filepath = ""
+    from dotenv import load_dotenv
+    load_dotenv()
+    filepath = "/Users/victor/Desktop/Screen Shot 2022-05-28 at 12.22.49 PM.png"
     g = GVisionManager()
     f = g.detect_text(filepath)
+    import os
+    print(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
     print([f[i].description for i in range(len(f))])
