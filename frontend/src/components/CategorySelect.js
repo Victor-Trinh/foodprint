@@ -16,6 +16,10 @@ import Grid from '@mui/material/Grid';
 
 export default function CategorySelect() {
     const [food, setFood] = useState("")
+    const data = sessionStorage.getItem('ingredients');
+    const ingredients = JSON.parse(data).food_list;
+    console.log('Ingredients: ', ingredients);
+    
 
     const handleChange = (event) => {
         setFood(event.target.value);
@@ -23,7 +27,7 @@ export default function CategorySelect() {
 
     function handleSubmit(event){
         event.preventDefault();
-        console.log('Food: ', food)
+        console.log('Food: ', food);
     }
 
     return (

@@ -37,6 +37,7 @@ export default function InputForm() {
             body: JSON.stringify(data)
         }).then(response=>response.json()).then(data=>{
             console.log(`ingredients: ${data.food_list}`) 
+            sessionStorage.setItem('ingredients', JSON.stringify(data))
         })
 
         navigate('/SelectMenus')
