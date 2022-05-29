@@ -1,15 +1,21 @@
-import React from 'react';
-import Plot from 'react-plotly.js';
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
 
-const Analyze = () => {
-    const d1 = new Date(2022, 4, 25);
+<body>
+
+    <div id="myPlot" style="width:100%;max-width:700px"></div>
+    <div id="myPlot2" style="width:100%;max-width:700px"></div>
+
+    <script>
+        const d1 = new Date(2022, 4, 25);
         const d2 = new Date(2022, 4, 26);
         const d3 = new Date(2022, 4, 27);
         var xArray = [d1, d2, d3];
         var yArray = [60.1, 12.2, 65.7];
 
         // Define Data
-        var data1 = [
+        var data = [
             {
                 x: xArray,
                 y: yArray,
@@ -18,7 +24,7 @@ const Analyze = () => {
         ];
 
         // Define Layout
-        var layout1 = {
+        var layout = {
             xaxis: { title: "Total Daily Carbon Emission" },
             yaxis: { range: [0, 70], title: "Date" },
             title: "Carbon Emission vs. Date"
@@ -38,10 +44,10 @@ const Analyze = () => {
             title: "Carbon Emission vs. Food"
         };
 
-        
-    return (<div>
-            <Plot data={data1} layout={layout1}/> 
-            <Plot data={data2} layout={layout2}/>
-        </div>);
-}
-  export default Analyze;
+        Plotly.newPlot('myPlot', data, layout);
+        Plotly.newPlot('myPlot2', data2, layout2);
+    </script>
+
+</body>
+
+</html>

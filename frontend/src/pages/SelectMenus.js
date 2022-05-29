@@ -3,6 +3,7 @@ import InputForm from '../components/InputForm.js'
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
 import CategorySelect from '../components/CategorySelect';
+import AnalyzeSubmit from '../components/AnalyzeSubmit';
 
 function SelectMenus() {
     const data = sessionStorage.getItem('ingredients');
@@ -21,6 +22,7 @@ function SelectMenus() {
                 </Typography>
           </AppBar>
         {rows}
+        <AnalyzeSubmit />
     </div>
     
   }
