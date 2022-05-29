@@ -26,6 +26,17 @@ export default function CategorySelect(name) {
     function handleSubmit(event){
         event.preventDefault();
         console.log('Food: ', food);
+
+        // to backend
+        const endpoint = "http://127.0.0.1:3000/todb/"
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(food)
+        })
     }
 
     return (
