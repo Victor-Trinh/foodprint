@@ -14,11 +14,9 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 
-export default function CategorySelect() {
+export default function CategorySelect(name) {
+    console.log(name)
     const [food, setFood] = useState("")
-    const data = sessionStorage.getItem('ingredients');
-    const ingredients = JSON.parse(data).food_list;
-    console.log('Ingredients: ', ingredients);
     
 
     const handleChange = (event) => {
@@ -34,10 +32,9 @@ export default function CategorySelect() {
     <React.Fragment>
         <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
             <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 7, md: 3 } }}>
-                
                 <form onSubmit={handleSubmit}>
                 <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Food Category</InputLabel>
+                <InputLabel id="demo-simple-select-label">{name.name}</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
