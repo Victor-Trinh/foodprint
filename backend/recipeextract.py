@@ -36,8 +36,13 @@ class cohereExtractor():
       return(extraction.generations[0].text[:-1])
 
 # get random (ingredient, instructions)
-def get_random_recipes(data, n):
+def get_random_recipes(data, n, i = None):
   recipes = []
+  if i:
+    for _ in range(n):
+      recipes.append(("; ".join([food['text'] for food in data[i]['annotation']]), # extracted
+                      data[i]['infon'][1])) # instructions
+    return recipes
   idx = list(range(n))
   #idx = np.random.randint(0, len(data), size = n)
   random.shuffle(idx)
@@ -50,8 +55,12 @@ def get_random_recipes(data, n):
   return recipes
 
 # get random (instructions)
-def get_random_instructions(data, n):
+def get_random_instructions(data, n, i = None):
   recipes = []
+  if i:
+    for _ in range(n):
+      recipes.append(data[i]['infon'][1]) # instructions
+    return recipes
   idx = np.random.randint(0, len(data), size = n)
   for id in idx:
     recipes.append(data[id]['infon'][1]) # instructions
@@ -61,13 +70,13 @@ def food_extract(api_key, instructions):
   co = cohere.Client(api_key)
 
   # load recipe data https://academic.oup.com/database/article/doi/10.1093/database/baz121/5611291
-  with open('data/xmltojson.json') as fp:
+  with open('../data/xmltojson.json') as fp:
       data = json.load(fp)
   data = data['collection']['document']
   data = list(data)
 
   # get recipes 
-  recipe_examples = get_random_recipes(data, 4)#[get_random_recipes(data, 1)[0] * 10]
+  recipe_examples = get_random_recipes(data, n = 4, i = 1) #get_random_recipes(data, 3) 
   #instructions = get_random_instructions(data, 1)#[recipe_examples[0][1]]
   cohereFoodExtractor = cohereExtractor([e[1] for e in recipe_examples],
                                         [e[0] for e in recipe_examples], 
@@ -132,4 +141,4 @@ if __name__ == "__main__":
   # for food in results:
   #   fin.append(food.strip())
   # print("".join(instructions) + '\n' + str(fin))
-  print(food_extract(os.environ['COHERE_KEY'], ["Mash garlic with the salt in a small bowl. Place into a blender or food processor along with the garbanzo beans, tahini, lemon juice, honey, and enough water to cover the beans. Process until smooth. Spoon into a serving dish, and drizzle 2 tablespoons of olive oil over the top. Preheat the oven to 400 degrees F (200 degrees C). Brush pita breads with remaining olive oil, and cut into wedges. Season with salt and fresh rosemary. Bake for 5 minutes in the preheated oven. Cool, and serve with hummus."]))
+  print(food_extract(os.environ['COHERE_KEY'], ["Preheat oven to 275 degrees F (135 degrees C). In a shallow baking dish combine the artichoke hearts, mozzarella cheese, parmesan cheese and mayonnaise. Bake for 45 minutes, or until hot and bubbly. Sprinkle with almonds if desired. Serve hot with tortilla chips or crackers."]))
